@@ -1,0 +1,1 @@
+# globo-swapi-dev
