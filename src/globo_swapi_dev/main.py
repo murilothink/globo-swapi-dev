@@ -143,7 +143,7 @@ def expand_urls_to_names(df):
     """
     print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
     for column in df.columns:
-        if re.match(r".*url\d+$", column) or column.endswith('url'):
+        if re.match(r".*url\d+$", column) or column.endswith('url') or column.endswith('world'):
             match = re.search(r"\d+$", column)
             if match:
                 number = int(match.group())
@@ -151,6 +151,9 @@ def expand_urls_to_names(df):
                 new_column_name = column[:-len(str(number))] + str(new_number)
                 df[new_column_name] = df[column].apply(lambda url: get_name_from_url(url))
                 #df.drop(columns=[column], inplace=True) # Se quiser excluir a coluna de URL após expandir, descomente esta linha
+            else:
+                new_column_name = column + "_modified"  # Adiciona um sufixo "_modified" se não houver número na coluna
+                df[new_column_name] = df[column].apply(lambda url: get_name_from_url(url))
     return tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
 
 
@@ -214,5 +217,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
