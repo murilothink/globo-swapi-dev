@@ -5,27 +5,32 @@ import re
 import pandas as pd
 from tabulate import tabulate
 from src.globo_swapi_dev.functions.get_swapi import get_name_from_url, get_api_films
+import logging
+
+# Criação de um logger
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+console_handler = logging.StreamHandler()
+logger = logging.getLogger('meu_logger')
+logger.addHandler(console_handler)
+
 
 def create_table(data):
-    """
-    Creates a Pandas DataFrame and formats it as a table.
-    """
-    # Cria um DataFrame com os dados fornecidos
-    df = pd.DataFrame(data['results'])
 
-    # Trata todas as colunas que contêm listas
+    df = pd.DataFrame(data['results'])
+    logging.info('Iniciando o tratamento de colunas com que contêm listas')
     for column in df.columns:
         if isinstance(df[column].iloc[0], list):
             # Converte a lista em uma string separada por vírgulas
             df[column] = df[column].apply(lambda x: ', '.join(x))
-            # Divide a string em várias colunas
+
             df = df.join(df[column].str.split(', ', expand=True).add_prefix(f'{column}_url'))
-            # Remove a coluna original
+
             df.drop(columns=[column], inplace=True)
 
     # Formata o DataFrame como uma tabela usando tabulate
-    table1 = tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
+    #table1 = tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
     table_data = df.to_dict(orient='records')
+    logging.info('Fim do tratamento!')
     return table_data
 
 def read_table_from_txt(path):
@@ -33,9 +38,8 @@ def read_table_from_txt(path):
     return pd.read_json(path)
 
 def expand_urls_to_names(df):
-    """
-    Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes.
-    """
+
+    logging.info('Iniciando o tratamento que Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes')
     #print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
     for column in df.columns:
         if re.match(r".*url\d+$", column) or column.endswith('url') or column.endswith('world'):
@@ -50,13 +54,16 @@ def expand_urls_to_names(df):
                 new_column_name = column + "_modified"
                 df[new_column_name] = df[column].apply(lambda url: get_name_from_url(url))
                 df.drop(columns=[column], inplace=True)
+    logging.info('Fim do tratamento!')
     return df
         #tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
 
 def silver_save(df, endpoint):
+    logging.info(f'Iniciando Gravação Silver table {endpoint}!')
     endpoint_dir = os.path.join("silver", endpoint)
     os.makedirs(endpoint_dir, exist_ok=True)
     df.to_json(os.path.join(endpoint_dir, f"{endpoint}_table.json"), orient='records')
+    logging.info(f'Fim Gravação Silver table {endpoint}!')
 
 def create_table1(data):
     """
@@ -123,6 +130,7 @@ def expand_urls_to_names(df):
     """
     Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes.
     """
+    logging.info("Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes.")
     #print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
     for column in df.columns:
         if re.match(r".*url\d+$", column) or column.endswith('url') or column.endswith('world'):
@@ -142,10 +150,11 @@ def expand_urls_to_names(df):
         #tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
 
 def read_table_from_txt(path):
-
+    logging.info(f'Iniciando a leitura do pat {path}!')
     return pd.read_json(path)
 
 def silver_save(df, endpoint):
+    logging.info(f'Iniciando a gravação na silver do endpoint {endpoint}!')
     print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
     endpoint_dir = os.path.join("silver", endpoint)
     os.makedirs(endpoint_dir, exist_ok=True)
