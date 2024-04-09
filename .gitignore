@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+edi_reproc/__pycache__/
+edi_reproc/repo/__pycache__/
+edi_reproc/test/__pycache__/
+
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+coverage.xml
+test-reports/
+coverage*/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs / Text Editors
+.idea/
+
+
+deps
+dep*/
+dist/
+dep*.zip
+dependencies
+/letter/app.log
+/app.log
