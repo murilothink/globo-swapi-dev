@@ -1,6 +1,7 @@
 # OBTER ENDPOINTS
-
 BRONZE = 'bronze'
+SILVER = 'silver'
+GOLD = 'gold'
 PEOPLE_TABLE = "people"
 PLANETS_TABLE = "planets"
 SPECIES_TABLE = "species"

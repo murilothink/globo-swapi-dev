@@ -1,7 +1,8 @@
-import json
-import logging
-import requests
 import re
+
+import requests
+
+
 def get_api_films(endpoint):
     """
     Fetches data from the SWAPI endpoint.
@@ -17,6 +18,7 @@ def get_api_films(endpoint):
         print(f"Failed to fetch data from {endpoint}. Status code: {response.status_code}")
         return None
 
+
 def get_data_from_url(url):
     """
     Função para fazer uma solicitação GET para uma URL e retornar os dados JSON.
@@ -26,6 +28,7 @@ def get_data_from_url(url):
         return response.json()
     else:
         return None
+
 
 def get_name_from_url(url):
     try:

@@ -1,11 +1,12 @@
 import json
+import logging
 import os
 import re
 
 import pandas as pd
 from tabulate import tabulate
+
 from src.globo_swapi_dev.functions.get_swapi import get_name_from_url, get_api_films
-import logging
 
 # Criação de um logger
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -15,7 +16,6 @@ logger.addHandler(console_handler)
 
 
 def create_table(data):
-
     df = pd.DataFrame(data['results'])
     logging.info('Iniciando o tratamento de colunas com que contêm listas')
     for column in df.columns:
@@ -28,19 +28,20 @@ def create_table(data):
             df.drop(columns=[column], inplace=True)
 
     # Formata o DataFrame como uma tabela usando tabulate
-    #table1 = tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
+    # table1 = tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
     table_data = df.to_dict(orient='records')
     logging.info('Fim do tratamento!')
     return table_data
 
-def read_table_from_txt(path):
 
+def read_table_from_txt(path):
     return pd.read_json(path)
 
-def expand_urls_to_names(df):
 
-    logging.info('Iniciando o tratamento que Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes')
-    #print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
+def expand_urls_to_names(df):
+    logging.info(
+        'Iniciando o tratamento que Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes')
+    # print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
     for column in df.columns:
         if re.match(r".*url\d+$", column) or column.endswith('url') or column.endswith('world'):
             match = re.search(r"\d+$", column)
@@ -56,7 +57,8 @@ def expand_urls_to_names(df):
                 df.drop(columns=[column], inplace=True)
     logging.info('Fim do tratamento!')
     return df
-        #tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
+    # tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
+
 
 def silver_save(df, endpoint):
     logging.info(f'Iniciando Gravação Silver table {endpoint}!')
@@ -64,6 +66,7 @@ def silver_save(df, endpoint):
     os.makedirs(endpoint_dir, exist_ok=True)
     df.to_json(os.path.join(endpoint_dir, f"{endpoint}_table.json"), orient='records')
     logging.info(f'Fim Gravação Silver table {endpoint}!')
+
 
 def create_table1(data):
     """
@@ -86,10 +89,14 @@ def create_table1(data):
     table = tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
 
     return table
+
+
 def save_table_to_json(table_data, filename):
     print(tabulate(table_data, headers='keys', tablefmt='pretty', showindex=False))
     with open(filename, 'w') as json_file:
         json.dump(table_data, json_file, indent=4)
+
+
 def get_endpoint_and_save():
     endpoints = [
         'people',
@@ -126,12 +133,13 @@ def get_endpoint_and_save():
             # Salva os dados em um arquivo de texto dentro do diretório do endpoint
             save_table_to_json(table, os.path.join(endpoint_dir, filename))
 
+
 def expand_urls_to_names(df):
     """
     Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes.
     """
     logging.info("Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes.")
-    #print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
+    # print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
     for column in df.columns:
         if re.match(r".*url\d+$", column) or column.endswith('url') or column.endswith('world'):
             match = re.search(r"\d+$", column)
@@ -147,15 +155,17 @@ def expand_urls_to_names(df):
                 df.drop(columns=[column], inplace=True)
 
     return df
-        #tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
+    # tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
+
 
 def read_table_from_txt(path):
     logging.info(f'Iniciando a leitura do pat {path}!')
     return pd.read_json(path)
 
-def silver_save(df, endpoint):
+
+def silver_save(df, endpoint, layer):
     logging.info(f'Iniciando a gravação na silver do endpoint {endpoint}!')
     print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
-    endpoint_dir = os.path.join("silver", endpoint)
+    endpoint_dir = os.path.join(layer, endpoint)
     os.makedirs(endpoint_dir, exist_ok=True)
     df.to_json(os.path.join(endpoint_dir, f"{endpoint}_table.json"), orient='records')
