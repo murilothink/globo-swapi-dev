@@ -66,15 +66,15 @@ Este projeto utiliza o banco de dados SQLite para armazenar os dados processados
 - `silver_files_db`: Contém o banco de dados da etapa prata.
 - `gold_files_db`: Contém o banco de dados da etapa ouro.
 
-### Download Dbvier 
+### Download DBeaver 
 
-Para realizar a conexão do SQLite, faça o download do Dbvier ou qualquer ferramenta de gerenciamento de banco de dados.
+Para realizar a conexão do SQLite, faça o download do DBeaver ou qualquer ferramenta de gerenciamento de banco de dados.
 
-Link: [Download Dbvier](https://dbeaver.io/download/)
+Link: [Download DBeaver](https://dbeaver.io/download/)
 
-### Conexão Dbivier
+### Conexão DBeaver
 
-1. Abra o Dbvier.
+1. Abra o DBeaver.
 2. Clique em "Nova Conexão".
 3. Escolha o banco de dados SQLite e clique em "Avançar".
 4. Clique em "Abrir".
