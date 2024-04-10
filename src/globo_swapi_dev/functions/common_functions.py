@@ -38,7 +38,7 @@ def read_table_from_txt(path):
 def expand_urls_to_names(df):
     logging.info(
         'Iniciando o tratamento que Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes')
-    # print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
+
     for column in df.columns:
         if re.match(r".*url\d+$", column) or column.endswith('url') or column.endswith('world'):
             match = re.search(r"\d+$", column)
@@ -54,7 +54,6 @@ def expand_urls_to_names(df):
                 df.drop(columns=[column], inplace=True)
     logging.info('Fim do tratamento!')
     return df
-    # tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
 
 
 def silver_save(df, endpoint):
@@ -72,7 +71,7 @@ def create_table1(data):
     table_data = []
     for key, value in data.items():
         if isinstance(value, list):
-            # Se o valor é uma lista, expandir em colunas separadas
+
             for i, item in enumerate(value):
                 new_key = f"{key}_{i + 1}"
                 table_data.append({new_key: item})
@@ -118,14 +117,11 @@ def get_endpoint_and_save():
             else:
                 print(f"Failed to fetch {endpoint} data.")
 
-            # Nome do arquivo a ser salvo
             filename = f"{endpoint}_table.json"
 
-            # Cria o diretório do endpoint dentro do diretório "bronze"
             endpoint_dir = os.path.join("bronze", endpoint)
             os.makedirs(endpoint_dir, exist_ok=True)
 
-            # Salva os dados em um arquivo de texto dentro do diretório do endpoint
             save_table_to_json(table, os.path.join(endpoint_dir, filename))
 
 
