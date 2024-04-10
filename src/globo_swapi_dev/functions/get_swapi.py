@@ -4,9 +4,6 @@ import requests
 
 
 def get_api_films(endpoint):
-    """
-    Fetches data from the SWAPI endpoint.
-    """
 
     url = f"https://swapi.dev/api/{endpoint}/"
 
@@ -20,9 +17,7 @@ def get_api_films(endpoint):
 
 
 def get_data_from_url(url):
-    """
-    Função para fazer uma solicitação GET para uma URL e retornar os dados JSON.
-    """
+
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()

@@ -20,15 +20,12 @@ def create_table(data):
     logging.info('Iniciando o tratamento de colunas com que contêm listas')
     for column in df.columns:
         if isinstance(df[column].iloc[0], list):
-            # Converte a lista em uma string separada por vírgulas
             df[column] = df[column].apply(lambda x: ', '.join(x))
 
             df = df.join(df[column].str.split(', ', expand=True).add_prefix(f'{column}_url'))
 
             df.drop(columns=[column], inplace=True)
 
-    # Formata o DataFrame como uma tabela usando tabulate
-    # table1 = tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
     table_data = df.to_dict(orient='records')
     logging.info('Fim do tratamento!')
     return table_data
@@ -82,10 +79,8 @@ def create_table1(data):
         else:
             table_data.append({key: value})
 
-    # Transforma a lista de dicionários em DataFrame
     df = pd.DataFrame(table_data)
 
-    # Formata o DataFrame como uma tabela
     table = tabulate(df, headers='keys', tablefmt='pretty', showindex=False)
 
     return table
@@ -135,11 +130,8 @@ def get_endpoint_and_save():
 
 
 def expand_urls_to_names(df):
-    """
-    Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes.
-    """
     logging.info("Expande as URLs da API em cada coluna e substitui pelos nomes correspondentes.")
-    # print(tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
+
     for column in df.columns:
         if re.match(r".*url\d+$", column) or column.endswith('url') or column.endswith('world'):
             match = re.search(r"\d+$", column)
@@ -155,7 +147,6 @@ def expand_urls_to_names(df):
                 df.drop(columns=[column], inplace=True)
 
     return df
-    # tabulate(df, headers='keys', tablefmt='pretty', showindex=False))
 
 
 def read_table_from_txt(path):

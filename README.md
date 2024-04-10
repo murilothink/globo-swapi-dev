@@ -66,11 +66,34 @@ Este projeto utiliza o banco de dados SQLite para armazenar os dados processados
 - `silver_files_db`: Contém o banco de dados da etapa prata.
 - `gold_files_db`: Contém o banco de dados da etapa ouro.
 
+### Download Dbvier 
+
+Para realizar a conexão do SQLite, faça o download do Dbvier ou qualquer ferramenta de gerenciamento de banco de dados.
+
+Link: [Download Dbvier](https://dbeaver.io/download/)
+
+### Conexão Dbivier
+
+1. Abra o Dbvier.
+2. Clique em "Nova Conexão".
+3. Escolha o banco de dados SQLite e clique em "Avançar".
+4. Clique em "Abrir".
+5. Vá até o projeto `globo-swapi-dev` e escolha o arquivo que deseja ver nas pastas abaixo:
+   - `silver_files_db`: Contém o banco de dados da etapa prata.
+   - `gold_files_db`: Contém o banco de dados da etapa ouro.
+
+### Perguntas Frequentes
+
+
+#### Por que utilizamos o SQLite e não Docker Container?
+
+O SQLite foi utlizado nesse projeto devido às suas características de fácil configuração, baixa sobrecarga de administração, portabilidade e eficiência.
+
+### Por que usamos o Pandas em vez do Spark?
+
+Optei pelo Pandas neste projeto por sua configuração mais simples e pelo fato de lidarmos com conjuntos de dados menores. Como estamos trabalhando principalmente em um ambiente de desenvolvimento individual e não em um cluster, o Pandas oferece a eficiência e a portabilidade necessárias. Embora reconheça que o Spark seria mais apropriado em ambientes distribuídos com grandes conjuntos de dados, para este projeto, o Pandas atende às nossas necessidades atuais de forma satisfatória.
 
 ## Contribuindo
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir um *issue* ou enviar um *pull request*.
 
-## Licença
-
-Este projeto está licenciado 
