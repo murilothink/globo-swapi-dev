@@ -82,7 +82,7 @@ Link: [Download Dbvier](https://dbeaver.io/download/)
    - `silver_files_db`: Contém o banco de dados da etapa prata.
    - `gold_files_db`: Contém o banco de dados da etapa ouro.
 
-### Perguntas Frequentes
+## Perguntas Frequentes
 
 
 #### Por que utilizamos o SQLite e não Docker Container?
